@@ -32,10 +32,21 @@ app.post("/vehicle/add", (req, res) => {
             newVehicle.wingspan = req.body.wingspan;
         }
         vehicles.push(newVehicle);
+        console.log(vehicles);
         res.status(201).send("Vehicle added");
     }
     catch (error) {
         res.status(500).send("an error ocured");
+    }
+});
+app.get("/vehicle/search/:model", (req, res) => {
+    const searchterm = req.params.model;
+    const foundVehcile = vehicles.find(vehicle => vehicle.model === searchterm);
+    if (foundVehcile) {
+        res.send(foundVehcile);
+    }
+    else {
+        res.status(404).send("Vehcile not found");
     }
 });
 app.listen(port, () => {
