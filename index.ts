@@ -35,10 +35,22 @@ app.post("/vehicle/add", (req: Request, res: Response) => {
         }
 
         vehicles.push(newVehicle)
+        console.log(vehicles)
 
         res.status(201).send("Vehicle added")
     } catch (error) {
         res.status(500).send("an error ocured")
+    }
+})
+
+app.get("/vehicle/search/:model", (req: Request, res: Response) => {
+    const searchterm: String = req.params.model
+    const foundVehcile = vehicles.find(vehicle => vehicle.model === searchterm)
+
+    if (foundVehcile) {
+        res.send(foundVehcile)
+    } else {
+        res.status(404).send("Vehcile not found")
     }
 })
 
