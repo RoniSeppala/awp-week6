@@ -13,31 +13,33 @@ app.get("/hello", (req: Request, res: Response) => {
 })
 
 app.post("/vehicle/add", (req: Request, res: Response) => {
-    console.log(vehicles)
-    const newVehicle: Vehicle = {
-        model: req.body.model,
-        color: req.body.color,
-        year: req.body.year,
-        power: req.body.power
-    }
+    try {
+        const newVehicle: Vehicle = {
+            model: req.body.model,
+            color: req.body.color,
+            year: req.body.year,
+            power: req.body.power
+        }
 
-    if (req.body.bodyType !== undefined){
-        newVehicle.bodyType = req.body.bodyType
-    }
-    if (req.body.wheelCount !== undefined){
-        newVehicle.wheelCount = req.body.wheelCount
-    }
-    if (req.body.draft !== undefined){
-        newVehicle.draft = req.body.draft
-    }
-    if (req.body.wingspan !== undefined){
-        newVehicle.wingspan = req.body.wingspan
-    }
+        if (req.body.bodyType !== undefined){
+            newVehicle.bodyType = req.body.bodyType
+        }
+        if (req.body.wheelCount !== undefined){
+            newVehicle.wheelCount = req.body.wheelCount
+        }
+        if (req.body.draft !== undefined){
+            newVehicle.draft = req.body.draft
+        }
+        if (req.body.wingspan !== undefined){
+            newVehicle.wingspan = req.body.wingspan
+        }
 
-    vehicles.push(newVehicle)
-    console.log(vehicles)
+        vehicles.push(newVehicle)
 
-    res.send(req.body)
+        res.status(201).send("Vehicle added")
+    } catch (error) {
+        res.status(500).send("an error ocured")
+    }
 })
 
 app.listen(port, () => {

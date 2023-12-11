@@ -12,28 +12,31 @@ app.get("/hello", (req, res) => {
     res.send("Hello world");
 });
 app.post("/vehicle/add", (req, res) => {
-    console.log(vehicles);
-    const newVehicle = {
-        model: req.body.model,
-        color: req.body.color,
-        year: req.body.year,
-        power: req.body.power
-    };
-    if (req.body.bodyType !== undefined) {
-        newVehicle.bodyType = req.body.bodyType;
+    try {
+        const newVehicle = {
+            model: req.body.model,
+            color: req.body.color,
+            year: req.body.year,
+            power: req.body.power
+        };
+        if (req.body.bodyType !== undefined) {
+            newVehicle.bodyType = req.body.bodyType;
+        }
+        if (req.body.wheelCount !== undefined) {
+            newVehicle.wheelCount = req.body.wheelCount;
+        }
+        if (req.body.draft !== undefined) {
+            newVehicle.draft = req.body.draft;
+        }
+        if (req.body.wingspan !== undefined) {
+            newVehicle.wingspan = req.body.wingspan;
+        }
+        vehicles.push(newVehicle);
+        res.status(201).send("Vehicle added");
     }
-    if (req.body.wheelCount !== undefined) {
-        newVehicle.wheelCount = req.body.wheelCount;
+    catch (error) {
+        res.status(500).send("an error ocured");
     }
-    if (req.body.draft !== undefined) {
-        newVehicle.draft = req.body.draft;
-    }
-    if (req.body.wingspan !== undefined) {
-        newVehicle.wingspan = req.body.wingspan;
-    }
-    vehicles.push(newVehicle);
-    console.log(vehicles);
-    res.send(req.body);
 });
 app.listen(port, () => {
     console.log("server running");
